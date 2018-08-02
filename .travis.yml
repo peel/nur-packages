@@ -4,8 +4,8 @@ sudo: false
 
 env:
   global:
-    - CACHIX_CACHE=
-    - NUR_REPO=<YOUR_NUR_REPO_NAME_HERE>
+    - CACHIX_CACHE=peel
+    - NUR_REPO=peel/nur-packages
 
 install:
  - nix --version
@@ -18,6 +18,9 @@ script:
  - nix eval -f default.nix 'lib'
  - nix eval -f default.nix 'modules'
  - nix eval -f default.nix 'overlays'
+ - nix eval -f default.nix 'darwin-modules'
+ - nix eval -f default.nix 'pkgs'
+
 
 after_success:
   - if [ -n "${CACHIX_CACHE}" ]; then cachix push "${CACHIX_CACHE}" $outs; fi

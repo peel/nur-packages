@@ -1,7 +1,3 @@
-# This file filters out all the broken packages from your package set.
-# It's what gets built by CI, so if you correctly mark broken packages as
-# broken your CI will not try to build them and the non-broken packages will
-# be added to the cache.
 { pkgs ? import <nixpkgs> {} }:
 
 let filterSet =
@@ -15,7 +11,7 @@ let filterSet =
         )
       );
 in filterSet
-     (n: !(n=="lib"||n=="overlays"||n=="modules")) # filter out non-packages
+     (n: !(n=="lib"||n=="overlays"||n=="modules"||n=="darwin-modules"))
      (p: (builtins.isAttrs p)
        && !(
              (builtins.hasAttr "meta" p)

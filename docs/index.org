@@ -1,0 +1,3 @@
+* NUR 
+[[https://travis-ci.com/peel/nur-packages][https://travis-ci.com/peel/nur-packages.svg?branch=master]]
+[[https://peel.cachix.org][https://img.shields.io/badge/cachix-peel-blue.svg]]

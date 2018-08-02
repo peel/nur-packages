@@ -1,8 +1,8 @@
 { pkgs }:
 
 with pkgs.lib; {
-  # Add your library functions here
-  #
-  # hexint = x: hexvals.${toLower x};
+  mkOverlay = username: overlay:
+              let homePath = if pkgs.stdenv isDarwin then "Users" else "home";
+              in builtins.toPath "/${homePath}/${username}/.config/nixpkgs/overlays/${overlay}.nix";
 }
 
