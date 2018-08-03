@@ -1,7 +1,6 @@
 { pkgs }:
 
 {
-  alacritty = pkgs.callPackage ./applications/misc/alacritty {};
   bloop = pkgs.bloop.overrideAttrs(oldAttrs: rec {
     name = "bloop-${version}";
     version = "1.0.0";
@@ -66,8 +65,6 @@
     inherit (pkgs.qt5) qtbase qmake qttools qtmacextras qtx11extras;
   };
   # remacs = pkgs.callPackage ./pkgs/applications/editors/emacs/remacs.nix {};
-  rofi-emoji = pkgs.callPackage ./misc/rofi-emoji {};
-  rofi-wifi-menu = pkgs.callPackage ./misc/rofi-wifi-menu {};
   scripts = pkgs.callPackage ./misc/scripts {
     inherit pkgs; inherit (pkgs) stdenv;
   };
@@ -89,4 +86,7 @@
       sha256 = "0mn6svz2mqbpwlx510r447vflfcxryykpin6h6429dlz0wjlipa8";
     };
   });
-} else {})
+} else {
+  rofi-emoji = pkgs.callPackage ./misc/rofi-emoji {};
+  rofi-wifi-menu = pkgs.callPackage ./misc/rofi-wifi-menu {};
+})

@@ -28,6 +28,6 @@ stdenv.mkDerivation rec {
     description = "Some useful scripts I often use";
     platforms = platforms.unix;
     maintainers = with maintainers; [ peel ];
-    license = licenses.gnu;
+    license = licenses.gpl3;
   };
 }

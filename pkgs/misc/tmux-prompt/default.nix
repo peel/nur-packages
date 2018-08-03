@@ -26,6 +26,6 @@ stdenv.mkDerivation rec {
     description = "My tmux-prompt";
     platforms = platforms.unix;
     maintainers = with maintainers; [ peel ];
-    license = licenses.gnu;
+    license = licenses.gpl3;
   };
 }
