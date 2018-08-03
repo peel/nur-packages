@@ -38,7 +38,6 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "A rofi emoji picker";
     platforms = platforms.linux;
-    maintainers = with maintainers; [ peel ];
     license = licenses.mit;
   };
 }

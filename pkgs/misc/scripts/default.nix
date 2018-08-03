@@ -27,7 +27,6 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Some useful scripts I often use";
     platforms = platforms.unix;
-    maintainers = with maintainers; [ peel ];
     license = licenses.gpl3;
   };
 }

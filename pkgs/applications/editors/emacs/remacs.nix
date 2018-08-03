@@ -70,7 +70,6 @@ stdenv.mkDerivation rec {
     description = "A community-driven Rust port of GNU Emacs, the extensible, customizable text editor";
     homepage    = http://www.gnu.org/software/emacs/;
     license     = licenses.gpl3Plus;
-    maintainers = with maintainers; [ peel ];
     platforms   = platforms.darwin;
 
     longDescription = ''

@@ -42,7 +42,6 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "A rofi wifi control panel";
     platforms = platforms.linux;
-    maintainers = with maintainers; [ peel ];
     license = licenses.mit;
   };
 }
