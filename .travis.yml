@@ -1,5 +1,10 @@
 language: nix
-
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode8.3  # 10.12
+    - os: linux
+      
 sudo: false
 
 env:
@@ -19,7 +24,6 @@ script:
  - nix eval -f default.nix 'modules'
  - nix eval -f default.nix 'overlays'
  - nix eval -f default.nix 'darwin-modules'
- - nix eval -f default.nix 'pkgs'
 
 
 after_success:

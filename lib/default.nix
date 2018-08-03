@@ -1,8 +1,7 @@
 { pkgs }:
 
 with pkgs.lib; {
-  mkOverlay = username: overlay:
+  mkOverlay = username:
               let homePath = if pkgs.stdenv isDarwin then "Users" else "home";
-              in builtins.toPath "/${homePath}/${username}/.config/nixpkgs/overlays/${overlay}.nix";
+              in builtins.toPath "/${homePath}/${username}/.config/nurpkgs";
 }
-

@@ -1,4 +1,5 @@
 { pkgs }:
+
 {
   alacritty = pkgs.callPackage ./applications/misc/alacritty {};
   bloop = pkgs.bloop.overrideAttrs(oldAttrs: rec {
@@ -9,20 +10,6 @@
       repo = "bloop";
       rev = "v${version}";
       sha256 =  "1j49dgz69gw64y7fbdkw6z8xr6bgnndb3c6yyc2qaz8a4da8n2xb";
-    };
-  });
-  chunkwm = pkgs.recurseIntoAttrs (pkgs.callPackage ./os-specific/darwin/chunkwm {
-        inherit (pkgs) callPackage stdenv fetchFromGitHub imagemagick;
-        inherit (pkgs.darwin.apple_sdk.frameworks) Carbon Cocoa ApplicationServices;
-  });
-  skhd = pkgs.skhd.overrideAttrs(oldAttrs: rec {
-    name = "skhd-${version}";
-    version = "0.2.2";
-    src = pkgs.fetchFromGitHub {
-      owner = "koekeishiya";
-      repo = "skhd";
-      rev = "v${version}";
-      sha256 = "0mn6svz2mqbpwlx510r447vflfcxryykpin6h6429dlz0wjlipa8";
     };
   });
   emacsPlus = let
@@ -57,7 +44,6 @@
           ++ pkgs.lib.optional withBorderless patchBorderless
           ++ pkgs.lib.optional withMulticolorFonts patchMulticolorFonts;
       });
-  firefox-bin = pkgs.callPackage ./networking/browsers/firefox-bin/darwin.nix {};
   gopass = pkgs.callPackage ./tools/security/gopass {};
   hoverfly = pkgs.callPackage ./development/tools/hoverfly {};
   ix = pkgs.callPackage ./misc/ix {};
@@ -83,9 +69,24 @@
   rofi-emoji = pkgs.callPackage ./misc/rofi-emoji {};
   rofi-wifi-menu = pkgs.callPackage ./misc/rofi-wifi-menu {};
   scripts = pkgs.callPackage ./misc/scripts {
-  inherit pkgs; inherit (pkgs) stdenv;
+    inherit pkgs; inherit (pkgs) stdenv;
   };
   tmux-prompt = pkgs.callPackage ./misc/tmux-prompt {};
   wee-slack = pkgs.callPackage ./networking/weechat/wee-slack.nix {};
-  zenity = pkgs.callPackage ./pkgs/misc/zenity {};
-}
+  zenity = pkgs.callPackage ./misc/zenity {};
+  } // (if pkgs.stdenv.isDarwin then {
+  chunkwm = pkgs.recurseIntoAttrs (pkgs.callPackage ./os-specific/darwin/chunkwm {
+        inherit (pkgs) callPackage stdenv fetchFromGitHub imagemagick;
+        inherit (pkgs.darwin.apple_sdk.frameworks) Carbon Cocoa ApplicationServices;
+  });
+  skhd = pkgs.skhd.overrideAttrs(oldAttrs: rec {
+    name = "skhd-${version}";
+    version = "0.2.2";
+    src = pkgs.fetchFromGitHub {
+      owner = "koekeishiya";
+      repo = "skhd";
+      rev = "v${version}";
+      sha256 = "0mn6svz2mqbpwlx510r447vflfcxryykpin6h6429dlz0wjlipa8";
+    };
+  });
+} else {})
