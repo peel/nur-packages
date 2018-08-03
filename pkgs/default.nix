@@ -71,7 +71,7 @@
   tmux-prompt = pkgs.callPackage ./misc/tmux-prompt {};
   wee-slack = pkgs.callPackage ./networking/weechat/wee-slack.nix {};
   zenity = pkgs.callPackage ./misc/zenity {};
-  } // (if pkgs.stdenv.isDarwin then {
+} // (if pkgs.stdenv.isDarwin then {
   chunkwm = pkgs.recurseIntoAttrs (pkgs.callPackage ./os-specific/darwin/chunkwm {
         inherit (pkgs) callPackage stdenv fetchFromGitHub imagemagick;
         inherit (pkgs.darwin.apple_sdk.frameworks) Carbon Cocoa ApplicationServices;

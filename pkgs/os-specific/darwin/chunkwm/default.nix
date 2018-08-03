@@ -48,12 +48,4 @@ let
           };
         inherit Carbon Cocoa ApplicationServices;
       };
-
-      bar = callPackage ./plugin.nix {
-        cfg = { name = "bar";
-            version = repoV;
-            sha256 = repoSha;
-          };
-        inherit Carbon Cocoa ApplicationServices;
-      };
   }; in chunkwm
