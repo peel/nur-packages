@@ -1,8 +1,6 @@
 language: nix
 matrix:
   include:
-    - os: osx
-      osx_image: xcode8.3  # 10.12
     - os: linux
       
 sudo: false
@@ -17,6 +15,7 @@ install:
  - travis_retry nix-channel --update
  - if [ -n "${CACHIX_CACHE}" ]; then nix-env -if https://github.com/cachix/cachix/tarball/master --substituters https://cachix.cachix.org --trusted-public-keys cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM=; fi
  - if [ -n "${CACHIX_CACHE}" ]; then cachix use "${CACHIX_CACHE}"; fi
+ - nix-env -iA nixpkgs.emacs
 
 script:
  - outs=$(nix-build non-broken.nix) && echo Produced $outs
@@ -30,4 +29,4 @@ after_success:
   - if [ -n "${CACHIX_CACHE}" ]; then cachix push "${CACHIX_CACHE}" $outs; fi
   - if [ "false" = "${TRAVIS_PULL_REQUEST}" -a "master" = "${TRAVIS_BRANCH}" ]; then
       curl -XPOST "https://nur-update.herokuapp.com/update?repo=${NUR_REPO}"; fi
-
+  - cd docs && emacs -Q index.org --batch -f org-html-export-to-html --kill && cd .. && git add docs/index.html && git commit -m "📝️ release docs" && git push origin ${TRAVIS_BRANCH}
