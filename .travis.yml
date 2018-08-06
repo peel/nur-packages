@@ -10,12 +10,17 @@ env:
     - CACHIX_CACHE=peel
     - NUR_REPO=peel/nur-packages
 
+cache:
+  directories:
+    - /nix/store
+    
 install:
  - nix --version
  - travis_retry nix-channel --update
  - if [ -n "${CACHIX_CACHE}" ]; then nix-env -if https://github.com/cachix/cachix/tarball/master --substituters https://cachix.cachix.org --trusted-public-keys cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM=; fi
  - if [ -n "${CACHIX_CACHE}" ]; then cachix use "${CACHIX_CACHE}"; fi
  - nix-env -iA nixpkgs.emacs
+ - mkdir -p ~/.emacs.d && curl -sSL https://raw.githubusercontent.com/hniksic/emacs-htmlize/master/htmlize.el --output ~/.emacs.d/htmlize.el
 
 script:
  - outs=$(nix-build non-broken.nix) && echo Produced $outs
@@ -24,9 +29,20 @@ script:
  - nix eval -f default.nix 'overlays'
  - nix eval -f default.nix 'darwin-modules'
 
-
 after_success:
   - if [ -n "${CACHIX_CACHE}" ]; then cachix push "${CACHIX_CACHE}" $outs; fi
   - if [ "false" = "${TRAVIS_PULL_REQUEST}" -a "master" = "${TRAVIS_BRANCH}" ]; then
       curl -XPOST "https://nur-update.herokuapp.com/update?repo=${NUR_REPO}"; fi
-  - cd docs && emacs -Q index.org --batch -f org-html-export-to-html --kill && cd .. && git add docs/index.html && git commit -m "📝️ release docs" && git push origin ${TRAVIS_BRANCH}
+  - git tag "${date +"%F-%T}" -m "🚀️ ship it"
+  - cd docs && emacs -Q index.org --batch --eval "(progn (load \"~/.emacs.d/htmlize.el\")(org-babel-tangle)(org-html-export-to-html))" --kill
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  local-dir: docs
+  target-branch: gh-pages
+  fqdn: nur.codearsonist.com
+  on:
+    branch: master
