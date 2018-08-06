@@ -9,7 +9,15 @@ env:
   global:
     - CACHIX_CACHE=peel
     - NUR_REPO=peel/nur-packages
-
+    
+matrix:
+  allow_failures:
+    - os: osx
+      
+os:
+  - osx
+  - linux
+  
 cache:
   directories:
     - /nix/store
@@ -33,7 +41,7 @@ after_success:
   - if [ -n "${CACHIX_CACHE}" ]; then cachix push "${CACHIX_CACHE}" $outs; fi
   - if [ "false" = "${TRAVIS_PULL_REQUEST}" -a "master" = "${TRAVIS_BRANCH}" ]; then
       curl -XPOST "https://nur-update.herokuapp.com/update?repo=${NUR_REPO}"; fi
-  - git tag "${date +"%F-%T}" -m "🚀️ ship it"
+  - git tag "${TRAVIS_BUILD_NUMBER}" -m "🚀️ ship it"
   - cd docs && emacs -Q index.org --batch --eval "(progn (load \"~/.emacs.d/htmlize.el\")(org-babel-tangle)(org-html-export-to-html))" --kill
 
 deploy:
