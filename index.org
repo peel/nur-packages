@@ -7,7 +7,7 @@
 #+KEYWORDS: code arsonist, codearsonist, limanowski, piotr limanowski, scala, elixir, erlang, haskell
 #+HTML_HEAD_EXTRA: <link rel="shortcut icon" href="https://codearsonist.com/favicon.ico" />
 #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="https://codearsonist.com/assets/css/screen.css" />
-#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="./style.css" />
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="style.css" />
 #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700,300,400|Source+Code+Pro:500" />
 
 * Status
@@ -45,7 +45,7 @@ NixOS modules
 - [[file:./../modules/default.nix]]
 
 * Darwin modules
-nix-darwin modules:
+nix-darwin modules
 #+CALL: expressions(path="../darwin-modules") :results value list
 
 #+RESULTS:
@@ -53,7 +53,7 @@ nix-darwin modules:
 - [[file:./../darwin-modules/default.nix]]
 
 * Packages
-NixOS and Darwin packages:
+NixOS and Darwin packages
 #+CALL: expressions(path="../pkgs") :results value list
 
 #+RESULTS:
@@ -81,3 +81,56 @@ NixOS and Darwin packages:
 
 #+ATTR_HTML: :alt codearsonist.com image :title codearsonist.com
 [[https://codearsonist.com/assets/img/bloglogo.png]]
+
+* HTML :noexport:
+#+NAME: site-specific-css
+#+BEGIN_SRC css :tangle style.css
+img{
+    width: 60px;
+    height: 60px;
+    margin: 60px 0 0 0;
+    border-radius: 60px;
+}
+.subtitle{
+    float: left;
+    margin: 0 auto;
+}
+h1.title{
+    margin: 60px 0;
+    font: 500 42px 'Roboto Slab',Serif;
+}
+h2{
+    border-bottom: 3px solid #eee;
+    padding:  0 5px 0;
+}
+.outline-2 {
+    padding: 10px 0 0 0;
+}
+.outline-2 p {
+    margin: 0;
+}
+.status p{
+    text-align: center;
+}
+.license h2 {
+  display: none;
+}
+.license p {
+  text-align: center;
+}
+div#content,div#postamble{
+    width:90%;
+    max-width:760px;
+    margin: 0 auto;
+}
+object.org-svg{
+    width: auto;
+}
+pre.src{
+    text-align: center;
+    background-color: #fff;
+}
+#org-div-home-and-up{
+    display:none;
+}
+#+END_SRC
