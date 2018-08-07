@@ -11,7 +11,7 @@
 #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700,300,400|Source+Code+Pro:500" />
 
 * Status
-[[https://travis-ci.org/peel/nur-packages][https://travis-ci.org/peel/nur-packages.svg?branch=master]]
+[[https://travis-ci.org/peel/nur-packages][https://travis-ci.org/peel/nur-packages.svg]]
 [[https://peel.cachix.org][https://img.shields.io/badge/cachix-peel-blue.svg]]
 #+NAME: expressions
 #+BEGIN_SRC elisp :var path="../" ext="nix":type :exports none
