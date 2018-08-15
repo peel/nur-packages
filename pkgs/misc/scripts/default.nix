@@ -3,7 +3,7 @@
 with stdenv.lib;
 
 stdenv.mkDerivation rec {
-  version = "1.0.0";
+  version = "1.0.1";
   baseName = "peel-scripts";
   name = "${baseName}-${version}";
 
@@ -22,6 +22,7 @@ stdenv.mkDerivation rec {
   wrapperPath = with stdenv.lib; makeBinPath (with pkgs;
        [ coreutils ]
     ++ [ ripgrep ]
+    ++ optionals stdenv.isLinux [ feh ]
     ++ [ curl fzf fasd ]);
 
   meta = with stdenv.lib; {
