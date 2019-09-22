@@ -3,7 +3,6 @@
 let
   mkCoursierBinary = import ./development/tools/lib.nix { inherit (pkgs) stdenv jdk jre coursier makeWrapper;};
 in {
-  codeship-jet = pkgs.callPackage ./tools/misc/codeship-jet {};
   emacsPlus = let
     patchMulticolorFonts = pkgs.fetchurl {
         url = "https://gist.githubusercontent.com/aatxe/260261daf70865fbf1749095de9172c5/raw/214b50c62450be1cbee9f11cecba846dd66c7d06/patch-multicolor-font.diff";
@@ -37,42 +36,10 @@ in {
           ++ pkgs.lib.optional withMulticolorFonts patchMulticolorFonts;
       });
   gopass = pkgs.callPackage ./tools/security/gopass {};
-  hex2nix = pkgs.hex2nix.overrideAttrs(oldAttrs: rec {
-    version = "0.0.6-786de2e";
-    src = pkgs.fetchFromGitHub {
-      owner  = "erlang-nix";
-      repo   = "hex2nix";
-      rev = "786de2e4a0633c4a24dc5c3904e0f9ffa9557a7d";
-      # "date": "2018-07-16T09:23:03-04:00"
-      sha256 = "04knhxjk4jyc2j7a32i6wkz2msfiw14q4l9gc1kq90nfpv0dxfiv";
-    };
-  });
   hoverfly = pkgs.callPackage ./development/tools/hoverfly {};
   ix = pkgs.callPackage ./misc/ix {};
   mill = pkgs.callPackage ./development/tools/mill {};
   metals = pkgs.callPackage ./development/tools/metals {};
-  # luaPackages = pkgs.luaPackages // {
-  #   cjson = pkgs.luaPackages.cjson.overrideAttrs(oldAttrs: rec {
-  #   buildInputs = [ pkgs.lua52Packages.lua ];
-  #   NIX_LDFLAGS="-L${pkgs.lua52Packages.lua}/lib -bundle -undefined dynamic_lookup";
-    
-  #   preBuild = ''
-  #     sed -i "s|/usr/local|$out|" Makefile
-  #   '';
-  #   makeFlags = [
-  #     "LUA_VERSION=5.2"
-  #     "CC=clang"
-  #    ];
-  # });
-  # };
-  # olm = pkgs.olm.overrideAttrs (oldAttrs: rec {
-  #   makeFlags = [ "CC=clang" ];
-  #   prePatch = if pkgs.stdenv.isDarwin then ''
-  #     substituteInPlace Makefile --replace 'soname' 'install_name'
-  #     substituteInPlace Makefile --replace '-Wl,--version-script,version_script.ver' ' '
-  #   '' else "";
-  #   meta.platforms = pkgs.lib.platforms.unix;
-  # });
   qarma = pkgs.callPackage ./misc/qarma {
     inherit (pkgs) stdenv fetchFromGitHub pkgconfig;
     inherit (pkgs.qt5) qtbase qmake qttools qtmacextras qtx11extras;
@@ -84,10 +51,6 @@ in {
   tmux-prompt = pkgs.callPackage ./misc/tmux-prompt {};
   zenity = pkgs.callPackage ./misc/zenity {};
 } // (if pkgs.stdenv.isDarwin then {
-  chunkwm = pkgs.recurseIntoAttrs (pkgs.callPackage ./os-specific/darwin/chunkwm {
-        inherit (pkgs) callPackage stdenv fetchFromGitHub imagemagick;
-        inherit (pkgs.darwin.apple_sdk.frameworks) Carbon Cocoa ApplicationServices;
-  });
   yabai = pkgs.callPackage ./os-specific/darwin/yabai {
     inherit (pkgs) stdenv fetchFromGitHub;
     inherit (pkgs.darwin.apple_sdk.frameworks) Carbon Cocoa ScriptingBridge;
