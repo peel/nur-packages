@@ -35,6 +35,7 @@ in {
           ++ pkgs.lib.optional withBorderless patchBorderless
           ++ pkgs.lib.optional withMulticolorFonts patchMulticolorFonts;
       });
+  _1pa = pkgs.callPackage ./tools/security/_1pa {};
   gopass = pkgs.callPackage ./tools/security/gopass {};
   hoverfly = pkgs.callPackage ./development/tools/hoverfly {};
   ix = pkgs.callPackage ./misc/ix {};
